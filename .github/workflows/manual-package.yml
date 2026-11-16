@@ -64,9 +64,10 @@ jobs:
       - name: Sync images to GHCR
         env:
           REGISTRY_OWNER: ${{ github.repository_owner }}
+          REGISTRY_USERNAME: ${{ github.actor }}
+          REGISTRY_PASSWORD: ${{ secrets.GHCR_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           chmod +x ./skopeo-sync.sh
-          export REGISTRY_AUTH_FILE="$HOME/.docker/config.json"
           bash ./skopeo-sync.sh
 
       - name: Cleanup

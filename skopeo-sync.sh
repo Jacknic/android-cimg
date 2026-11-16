@@ -9,6 +9,11 @@ source ./setup-repo.sh
 REGISTRY_OWNER="${REGISTRY_OWNER,,}"
 DEST="ghcr.io/${REGISTRY_OWNER}/"
 
+sync_args=()
+if [[ -n "${REGISTRY_USERNAME:-}" && -n "${REGISTRY_PASSWORD:-}" ]]; then
+  sync_args+=(--dest-creds "${REGISTRY_USERNAME}:${REGISTRY_PASSWORD}")
+fi
+
 yq eval '.combiner.combinations[].name' dazzle.yaml | while read -r combination; do
   src="${REPO}:${combination}"
   if ! skopeo inspect --tls-verify=false "docker://${src}" >/dev/null 2>&1; then
@@ -20,6 +25,7 @@ yq eval '.combiner.combinations[].name' dazzle.yaml | while read -r combination;
     --src docker \
     --dest docker \
     --src-tls-verify=false \
+    "${sync_args[@]}" \
     "${src}" \
     "${DEST}"
 done
