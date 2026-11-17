@@ -16,10 +16,15 @@ fi
 
 yq eval '.combiner.combinations[].name' dazzle.yaml | while read -r combination; do
   src="${REPO}:${combination}"
-  if ! skopeo inspect --tls-verify=false "docker://${src}" >/dev/null 2>&1; then
-    echo "::warning::Skip ${src}: image not found in local registry"
-    continue
+  if ! inspect_error=$(skopeo inspect --tls-verify=false "docker://${src}" 2>&1 >/dev/null); then
+    if [[ "${inspect_error,,}" == *"manifest unknown"* ]]; then
+      echo "::warning::Skip ${src}: ${inspect_error}"
+      continue
+    fi
+    echo "Failed to inspect ${src}: ${inspect_error}" >&2
+    exit 1
   fi
+
   echo "Syncing ${src} -> ${DEST}"
   skopeo sync \
     --src docker \
