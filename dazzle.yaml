@@ -50,9 +50,9 @@ combiner:
         - 02-api:35
     - name: api-full
       ref:
-       - api-base
-       - api-24t30
-       - api-31t35
+        - api-base
+        - api-24t30
+        - api-31t35
 
     # JDK variants  -----------------
     - name: api-base-jdk8
@@ -122,26 +122,6 @@ combiner:
       chunks:
         - 04-gradle:8.2
 
-    - name: api-full-gradle-8.2-ndk-18.1.5063045
-      ref:
-        - api-full-gradle-8.2
-      chunks:
-        - 05-cmake
-        - 06-ndk:18.1.5063045
-    
-    - name: api-full-gradle-8.2-ndk-17.2.4988734
-      ref:
-        - api-full-gradle-8.2
-      chunks:
-        - 05-cmake
-        - 06-ndk:17.2.4988734
-    - name: api-full-gradle-8.2-ndk-24.0.8215888
-      ref:
-        - api-full-gradle-8.2
-      chunks:
-        - 05-cmake
-        - 06-ndk:24.0.8215888
-   
     - name: api-24t30-gradle-6.5
       ref:
         - api-24t30
@@ -155,7 +135,7 @@ combiner:
         - jdk11
       chunks:
         - 04-gradle:7.3
-    
+
     - name: api-31t35-gradle-7.3
       ref:
         - api-31t35
@@ -176,27 +156,19 @@ combiner:
         - jdk17
       chunks:
         - 04-gradle:8.2
-    
+
     - name: api-24t30-gradle-8.2
       ref:
         - api-24t30
         - jdk17
       chunks:
         - 04-gradle:8.2
-    
-    - name: api-24t30-gradle-8.2-ndk-17.2.4988734
-      ref:
-        - api-24t30-gradle-8.2
-      chunks:
-        - 05-cmake
-        - 06-ndk:17.2.4988734
-    
     - name: api-full-gradle-8.7
       ref:
         - api-full-jdk17
       chunks:
         - 04-gradle:8.7
-    
+
     # slim variants  -----------------
     - name: api-34-gradle-8.2
       ref:
@@ -204,14 +176,13 @@ combiner:
       chunks:
         - 02-api:34
         - 04-gradle:8.2
-    
+
     - name: api-34-gradle-8.7
       ref:
         - api-base-jdk17
       chunks:
         - 02-api:34
         - 04-gradle:8.7
-
 
   envvars:
     - name: PATH
